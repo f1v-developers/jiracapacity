@@ -81,11 +81,11 @@ function progressBar(data) {
 }
 
 var totals = rollUp(summary);
-jQuery(document).on('click', '.js-quickfilter-button.ghx-active', function() {
+jQuery(document).on('click', '.js-quickfilter-button', function() {
     var person = jQuery(this).first().attr('title').match(/\(([^)]+)\)/g),
         data = totals;
     person = person[0];
-    if (person) {
+    if (person && jQuery(this).hasClass('ghx-active')) {
         person = person.substring(1, person.length - 1);
         data = rollUp(perPersonSummary[person]);
     }
