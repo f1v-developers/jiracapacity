@@ -77,6 +77,7 @@ function progressBar(data) {
         'height': '10px',
         'width': (100 * (data[0] - data[1]) / data[0]).toFixed(1) + '%'
     })));
+    jQuery('#js-work-quickfilters').css({'minHeight': '35px'});
     GH.WorkView.handleResizeEvent();
 }
 
