@@ -9,7 +9,7 @@ hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%
 var issues = Object.keys(GH.GridDataController.getModel().data.issues).map(function(x) {
     return GH.GridDataController.getModel().data.issues[x];
 });
-
+var hoursForDay = 8;
 var summary = issues.filter(function(issue) {
     return issue.typeName != "Story" && issue.extraFields[0].html;
 }).map(function(x) {
@@ -34,12 +34,12 @@ function rollUp(data) {
         if (issueEstimateData[1] == 'h') {
             issueEstimate = moment.duration(parseFloat(issueEstimateData[0]), issueEstimateData[1]).asHours();
         } else {
-            issueEstimate = moment.duration(parseFloat(issueEstimateData[0]), issueEstimateData[1]).asDays() * 8;
+            issueEstimate = moment.duration(parseFloat(issueEstimateData[0]), issueEstimateData[1]).asDays() * hoursForDay;
         }
         if (issueActualData[1] == 'h') {
             issueActual = moment.duration(parseFloat(issueActualData[0]), issueActualData[1]).asHours();
         } else {
-            issueActual = moment.duration(parseFloat(issueActualData[0]), issueActualData[1]).asDays() * 8;
+            issueActual = moment.duration(parseFloat(issueActualData[0]), issueActualData[1]).asDays() * hoursForDay;
         }
         return [issueEstimate, issueActual];
     });
@@ -50,7 +50,7 @@ function rollUp(data) {
     var timeLeft = eval(result.map(function(time) {
         return time[1];
     }).join("+"));
-    return [totalEstimate.toFixed(1), timeLeft.toFixed(1)];
+    return [(totalEstimate/hoursForDay).toFixed(1), (timeLeft/hoursForDay).toFixed(1)];
 }
 
 
