@@ -29,11 +29,18 @@ issues.filter(function(issue) {
 function rollUp(data) {
     var result = data.map(function(x) {
         var issueEstimateData = x[0].match(/[a-zA-Z]+|[\.0-9]+/g),
-            issueEstimate = moment.duration(parseFloat(issueEstimateData[0]), issueEstimateData[1]).asDays(),
-
             issueActualData = x[1].match(/[a-zA-Z]+|[\.0-9]+/g),
-            issueActual = moment.duration(parseFloat(issueActualData[0]), issueActualData[1]).asDays();
-
+            issueEstimate, issueActual;
+        if (issueEstimateData[1] == 'h') {
+            issueEstimate = moment.duration(parseFloat(issueEstimateData[0]), issueEstimateData[1]).asHours();
+        } else {
+            issueEstimate = moment.duration(parseFloat(issueEstimateData[0]), issueEstimateData[1]).asDays() * 8;
+        }
+        if (issueActualData[1] == 'h') {
+            issueActual = moment.duration(parseFloat(issueActualData[0]), issueActualData[1]).asHours();
+        } else {
+            issueActual = moment.duration(parseFloat(issueActualData[0]), issueActualData[1]).asDays() * 8;
+        }
         return [issueEstimate, issueActual];
     });
 
