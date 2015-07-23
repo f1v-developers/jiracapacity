@@ -71,4 +71,4 @@ jQuery('#ghx-operations').after(jQuery('<div>').addClass('f1v-progress').css({
     'height': '10px',
     'width': (100 * (totals[0] - totals[1]) / totals[0]).toFixed(1) + '%'
 })));
-jQuery(window).resize();
+GH.WorkView.handleResizeEvent();
