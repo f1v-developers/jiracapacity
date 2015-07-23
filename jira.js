@@ -56,12 +56,12 @@ Object.keys(perPersonSummary).map(function(user) {
     if ($nameElement.find('.f1v').length) {
         $nameElement.find('.f1v').text(info);
     } else {
-        $nameElement.html($nameElement.text() + '<small class="f1v">' + info + '</small>');
+        $nameElement.html($nameElement.text() + '<small class="f1v aui-lozenge-subtle aui-lozenge jira-issue-status-lozenge-blue-gray">' + info + '</small>');
     }
 });
 
 function displayTotals() {
-    jQuery('#subnav-trigger-work').append(jQuery('<small>').html((totals[0] - totals[1]) + '/' + totals[0]));
+    jQuery('#subnav-trigger-work').append(jQuery('<small>').addClass('aui-lozenge jira-issue-status-lozenge-blue-gray').html((totals[0] - totals[1]) + ' of ' + totals[0]));
 }
 
 function progressBar(data) {
@@ -80,7 +80,7 @@ function progressBar(data) {
 
 var totals = rollUp(summary);
 jQuery(document).on('click', '.js-quickfilter-button.ghx-active', function() {
-    var person = jQuery(this).attr('title').match(/\(([^)]+)\)/g).text(),
+    var person = jQuery(this).attr('title').text().match(/\(([^)]+)\)/g),
         data = totals;
     if (person) {
         person = person.substring(1, person.length - 1);
