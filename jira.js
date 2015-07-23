@@ -61,6 +61,12 @@ Object.keys(perPersonSummary).map(function(user) {
 });
 
 var totals = rollUp(summary);
+
+function displayTotals() {
+	jQuery('#subnav-trigger-work').append(jQuery('<small>').html((totals[0]-totals[1])+'/'+totals[0]));
+}
+displayTotals();
+jQuery(document).on('click','.js-quickfilter-button.ghx-active', displayTotals)
 jQuery('.f1v-progress').remove();
 jQuery('#ghx-operations').after(jQuery('<div>').addClass('f1v-progress').css({
     'background': '#eee',
