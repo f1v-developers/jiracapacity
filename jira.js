@@ -60,21 +60,32 @@ Object.keys(perPersonSummary).map(function(user) {
   }
 });
 
-var totals = rollUp(summary);
-
 function displayTotals() {
 	jQuery('#subnav-trigger-work').append(jQuery('<small>').html((totals[0]-totals[1])+'/'+totals[0]));
 }
+
+function progressBar(data) {
+	jQuery('.f1v-progress').remove();
+	jQuery('#ghx-operations').after(jQuery('<div>').addClass('f1v-progress').css({
+	    'background': '#eee',
+	    'height': '10px',
+	    'width': '100%'
+	}).append(jQuery('<div>').css({
+	    'background': '#205081 ',
+	    'height': '10px',
+	    'width': (100 * (data[0] - data[1]) / data[0]).toFixed(1) + '%'
+	})));
+	GH.WorkView.handleResizeEvent();
+}
+
+var totals = rollUp(summary);
+jQuery(document).on('click', '.js-quickfilter-button.ghx-active', function() {
+	var person = jQuery(this).attr('title').match(/\(([^)]+)\)/g);
+  person = person.substring(1, person.length -1);
+  
+	displayTotals();
+	progressBar(perPersonSummary[person]);
+})
+
 displayTotals();
-jQuery(document).on('click','.js-quickfilter-button.ghx-active', displayTotals)
-jQuery('.f1v-progress').remove();
-jQuery('#ghx-operations').after(jQuery('<div>').addClass('f1v-progress').css({
-    'background': '#eee',
-    'height': '10px',
-    'width': '100%'
-}).append(jQuery('<div>').css({
-    'background': '#205081 ',
-    'height': '10px',
-    'width': (100 * (totals[0] - totals[1]) / totals[0]).toFixed(1) + '%'
-})));
-GH.WorkView.handleResizeEvent();
+progressBar(totals);
